@@ -6,6 +6,10 @@
   (let ((deps (make-hash-table :test #'equal))
         (seen (make-hash-table)))
     (labels ((getem (sys)
+               (format t "~S~%" sys)
+               (when (and (listp sys)
+                          (eq (car sys) :version))
+                 (setf sys (cadr sys)))
                (let* ((sys (asdf:find-system sys)))
                  (unless (gethash sys seen)
                    (setf (gethash sys seen) t
